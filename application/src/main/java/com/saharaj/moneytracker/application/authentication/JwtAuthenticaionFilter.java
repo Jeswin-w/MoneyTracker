@@ -31,13 +31,13 @@ public class JwtAuthenticaionFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         Optional<String> jwtToken = jwtService.resolveToken(request);
-        if (jwtToken.isPresent() && !jwtService.isTokenExpired(jwtToken.get())) {
+        if (jwtToken.isPresent()) {
             String subject = jwtService.getTokenSubject(jwtToken.get());
 
             if (subject != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails appUserDetails = appUserDetailsService.loadUserByEmail(subject);
 
-                if (appUserDetails != null && jwtService.validate(jwtToken.get(), appUserDetails)) {
+                if (appUserDetails != null && !jwtService.isTokenExpired(jwtToken.get())) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             appUserDetails, null);
                     SecurityContextHolder.getContext().setAuthentication(authToken);

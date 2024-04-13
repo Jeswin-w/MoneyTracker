@@ -43,12 +43,12 @@ public class JwtService {
     }
 
     public Claims getClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET).parseClaimsJwt(token);
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
     }
 
     public boolean isTokenExpired(String token) {
         Claims jwtClaims = getClaims(token);
-        if (new Date(System.currentTimeMillis).before(jwtClaims.getExpiration())){
+        if (new Date(System.currentTimeMillis()).before(jwtClaims.getExpiration())){
             return false;
         }
         return true;        
