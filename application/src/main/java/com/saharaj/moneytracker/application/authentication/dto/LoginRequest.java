@@ -1,4 +1,4 @@
-package com.saharaj.moneytracker.application.authentication.controller;
+package com.saharaj.moneytracker.application.authentication.dto;
 
 public class LoginRequest {
     private String email;

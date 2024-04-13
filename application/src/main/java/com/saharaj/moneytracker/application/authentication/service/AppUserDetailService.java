@@ -32,4 +32,16 @@ public class AppUserDetailService implements UserDetailsService   {
         throw new UsernameNotFoundException("no user");
     }
 
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        Optional <AppUser> foundUser = appUserRepository.findUserByEmail(email);
+        if (foundUser.isPresent()) {
+            AppUser user = foundUser.get();
+            return User.builder()
+            .username(user.getUsername())
+            .password(user.getPassword())
+            .build();
+        }
+        throw new UsernameNotFoundException("no user");
+    }
+
 }

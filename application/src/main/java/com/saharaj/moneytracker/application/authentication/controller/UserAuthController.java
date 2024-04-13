@@ -2,13 +2,13 @@ package com.saharaj.moneytracker.application.authentication.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.saharaj.moneytracker.application.authentication.dto.LoginRequest;
+import com.saharaj.moneytracker.application.authentication.dto.LoginResponse;
 import com.saharaj.moneytracker.application.authentication.model.AppUser;
 import com.saharaj.moneytracker.application.authentication.repositories.AppUserRepository;
 import com.saharaj.moneytracker.application.authentication.service.JwtService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Optional;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -48,8 +48,8 @@ public class UserAuthController {
             throw new BadCredentialsException("Invalid email/password");
         }
         //login success
-        LoginResponse LoginResponse = new LoginResponse(JwtService.generateToken(user));
-        return LoginResponse;
+        LoginResponse loginResponse = new LoginResponse(jwtService.generateToken(user));
+        return loginResponse;
     }
     
 

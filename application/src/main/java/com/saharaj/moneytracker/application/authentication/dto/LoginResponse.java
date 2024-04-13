@@ -1,9 +1,9 @@
-package com.saharaj.moneytracker.application.authentication.controller;
+package com.saharaj.moneytracker.application.authentication.dto;
 
 public class LoginResponse {
     private String token;
 
-    LoginResponse(String token) {
+    public LoginResponse(String token) {
         this.token = token;
     }
     public String getToken() {
