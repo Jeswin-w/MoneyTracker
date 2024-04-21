@@ -1,6 +1,5 @@
 package com.saharaj.moneytracker.application.authentication.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.saharaj.moneytracker.application.authentication.model.AppUser;
@@ -34,7 +33,7 @@ public class JwtService {
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return Optional.ofNullable(bearerToken.substring(TOKEN_PREFIX.length()));
         }
-        return null;
+        return Optional.empty();
     }
 
     public String getTokenSubject(String token) {

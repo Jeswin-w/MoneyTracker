@@ -1,11 +1,15 @@
 package com.saharaj.moneytracker.application.authentication;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.saharaj.moneytracker.application.authentication.service.AppUserDetailService;
@@ -16,6 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Component
 public class JwtAuthenticaionFilter extends OncePerRequestFilter {
 
     private JwtService jwtService;
@@ -39,7 +44,8 @@ public class JwtAuthenticaionFilter extends OncePerRequestFilter {
 
                 if (appUserDetails != null && !jwtService.isTokenExpired(jwtToken.get())) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            appUserDetails, null);
+                            appUserDetails, null, Collections.emptyList());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
